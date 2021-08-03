@@ -1,0 +1,22 @@
+{
+  "plugins": ["react-hooks"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "es6": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jest": true
+  },
+  "parser": "babel-eslint",
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
