@@ -1,0 +1,23 @@
+{
+  "drogariaRua": "N",
+  "sigla": "ID",
+  "idOracle": 78,
+  "nome": "INDUSTRIAL",
+  "categoria": "Super",
+  "logradouro": "Av. Industrial",
+  "numero": 2001,
+  "complemento": "",
+  "bairro": "Campestre",
+  "cidade": "Santo André",
+  "uf": "SP",
+  "cep": "09080-511",
+  "telefone": "(11) 4991-9500",
+  "funcionamentoSegSab": "8:00 às 22:00",
+  "funcionamentoDomFer": "8:00 às 20:00",
+  "latitude": "-23.639.159",
+  "longitude": "-46.465.397",
+  "blitzSaude": "",
+  "farmaciaPopular": "N",
+  "sellerEcomm": "coopspid",
+  "idLojaPdv": 7
+}

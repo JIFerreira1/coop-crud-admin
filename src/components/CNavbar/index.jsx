@@ -11,6 +11,8 @@ import { useHistory } from 'react-router-dom';
 
 
 import useStyles from './style';
+import { useEffect } from 'react';
+import { aboutUser } from '../../services/auth';
 
 export default function ButtonAppBar() {
   const classes = useStyles();
@@ -18,9 +20,16 @@ export default function ButtonAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(false);
   const [logout, setLogout] = React.useState(false);
+  const [aboutHim, setAboutHim] = React.useState({});
   const open = Boolean(anchorEl);
   const history = useHistory();
   const logoutSession = Boolean(logout);
+
+  useEffect(() => {
+    aboutUser()
+      .then(response => response.json())
+      .then(result => setAboutHim(result))
+  }, [])
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -28,6 +37,7 @@ export default function ButtonAppBar() {
 
   const handleLogout = (event) => {
     setLogout(!!logout);
+    window.localStorage.clear();
     history.push('/login');
   }
 
@@ -53,7 +63,7 @@ export default function ButtonAppBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <AccountCircle /> <span style={{fontSize: '12px', marginLeft: '10px'}}>{aboutHim.name}</span>
               </IconButton>
               <IconButton
                 aria-controls="menu-appbar"
@@ -63,7 +73,7 @@ export default function ButtonAppBar() {
               >
                 <ExitToAppOutlinedIcon />
               </IconButton>
-              <Menu
+              {/* <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
@@ -79,7 +89,7 @@ export default function ButtonAppBar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Perfil</MenuItem>
-              </Menu>
+              </Menu> */}
             </div>
         </Toolbar>
       </AppBar>
