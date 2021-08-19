@@ -12,6 +12,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { Form } from '@unform/web';
 import CInput from '../../components/Form/Input'
+import NumberFormat from 'react-number-format'
 import { loggingUser } from '../../services/auth'
 
 import useStyles from './style';
@@ -50,8 +51,7 @@ export default function Login() {
         abortEarly: false,
       })
 
-      
-      await loggingUser({"login": data.login, "password": data.password, "origin": "App"})
+      await loggingUser({"login": data.login.split('.').join('').split('-').join(''), "password": data.password, "origin": "App"})
         .then(response => response.json())
         .then((result) => {
           if(result.status.businessMessage.includes('Error')){
@@ -92,15 +92,17 @@ export default function Login() {
           Login
         </Typography>
         <Form className={classes.form} ref={formRef} onSubmit={handleSubmit} noValidate={true}>
-          <CInput
+          <NumberFormat 
+            format="###.###.###-##"
+            autoFocus
+            disabled={disableState}
             variant="outlined"
+            required
             fullWidth
             id="login"
-            label="Login"
+            label="login"
             name="login"
-            disabled={disableState}
-            autoFocus
-          />
+            customInput={CInput} />
           <br/>
           <CInput
             variant="outlined"

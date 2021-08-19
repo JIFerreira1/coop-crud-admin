@@ -5,11 +5,13 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: 600,
-    // height: 'auto',
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: '2px solid #ccc',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    borderRadius: '10px',
+    left: '25%',
+    right: '25%'
   },
 }));
 

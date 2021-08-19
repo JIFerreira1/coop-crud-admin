@@ -10,19 +10,33 @@ import CEditStoreModal from '../../components/CEditStoreModal';
 
 import useStyles from './style';
 import StoreContext from '../../contexts/Store';
+import Alert from '@material-ui/lab/Alert';
+import { AlertTitle } from '@material-ui/lab';
 
 export default function CDataTable({ dataReceived }) {
   const classes = useStyles();
   const history = useHistory();
 
   const { collection, dataModal, dataEditStore } = useContext(StoreContext);
+  const [requestDataGrid, setRequestDataGrid] = useState(true);
+
+  useEffect(() => {
+    if(collection.length !== 0){
+      setRequestDataGrid(false)
+    }
+
+    setTimeout(() => { 
+      setRequestDataGrid(false) 
+    }, 3000);
+
+  }, [collection]);
   
   const handleGoToEdit = () => {
     history.push('/edit-store');
   }
-  
+
   const columns = [
-    { field: 'id', disableSelectionOnClick: true, sortable: false, headerName: 'ID', width: 100, hide: true },
+    { field: 'id', disableSelectionOnClick: true, sortable: false, headerName: 'ID', width: 100, hide: true, filterable: false },
     {
       field: 'name',
       headerName: 'Nome',
@@ -37,6 +51,7 @@ export default function CDataTable({ dataReceived }) {
       disableSelectionOnClick: true,
       disableClickEventBubbling: true,
       sortable: false,
+      filterable: false,
       renderCell: (params) => (
         <HandleEditIcon index={params} />
       ),
@@ -49,6 +64,7 @@ export default function CDataTable({ dataReceived }) {
       disableSelectionOnClick: true,
       disableClickEventBubbling: true,
       sortable: false,
+      filterable: false,
       renderCell: (params) => (
         <HandleDetailsIcon index={params} />
       ),
@@ -60,6 +76,8 @@ export default function CDataTable({ dataReceived }) {
       disableSelectionOnClick: true,
       disableClickEventBubbling: true,
       sortable: false,
+      hide: true,
+      filterable: false,
       renderCell: (params) => (
         <HandleDeleteIcon index={params} />
       ),
@@ -138,14 +156,24 @@ export default function CDataTable({ dataReceived }) {
 
   return (
     <>
-      <DataGrid
-        disableSelectionOnClick={true}
-        autoHeight
-        pageSize={5}
-        rows={collection.map(row => ({'id': row._id, 'name': row.nome, 'edit': '', 'details': '', 'delete': ''}))}
-        columns={columns}
-        style={{backgroundColor: '#fff', borderRadius: 5}}
-      />
+    {
+      (!requestDataGrid && collection.length > 0) ? (
+        <DataGrid
+          disableSelectionOnClick={true}
+          autoHeight
+          pageSize={5}
+          rows={collection.map(row => ({'id': row._id, 'name': row.nome, 'edit': '', 'details': '', 'delete': ''}))}
+          columns={columns}
+          loading={requestDataGrid}
+          style={{backgroundColor: '#fff', borderRadius: 5}}
+        />
+      ) : (
+        <Alert severity="warning">
+          <AlertTitle>Ops</AlertTitle>
+          Infelizmente não foram encontradas mais lojas - <strong>crie uma nova loja</strong>
+        </Alert>
+      )
+    }
     </>
   );
 }

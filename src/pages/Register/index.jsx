@@ -13,6 +13,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { Form } from '@unform/web';
 import CInput from '../../components/Form/Input'
+import NumberFormat from 'react-number-format';
 import { createUser, verifyCPFCreated } from '../../services/auth'
 
 
@@ -42,17 +43,25 @@ export default function SignUp() {
     if(formRef.current.getFieldValue('cpf')) {
       formRef.current.setErrors({});
       const formatDataValidateCPFExistent = JSON.stringify({
-        "cpf": formRef.current.getFieldValue('cpf'),
+        "cpf": formRef.current.getFieldValue('cpf').split('.').join('').split('-').join(''),
         "origin": "App"
       });
   
       verifyCPFCreated(formatDataValidateCPFExistent)
         .then((response) => response.json())
-        .then((result) => console.log(result));
+        .then((result) => {
+          if(result) {
+            setDisableState(false)
+            setStartRequest(false)
+            setMessageErrors({message: 'CPF Já Cadastrado'});
+          }
+        });
     }
   }
 
   async function handleSubmit(data, { reset }) {
+    formRef.current.setErrors({});
+    setMessageErrors({});
     try {
       setDisableState(true)
       setStartRequest(true)
@@ -66,10 +75,10 @@ export default function SignUp() {
       await schema.validate(data, {
         abortEarly: false,
       })
-      userDataCreateUser = {
+      userDataCreateUser = JSON.stringify({
         "active": true,
         "name": data.firstName,
-        "login": data.cpf,
+        "login": data.cpf.split('.').join('').split('-').join(''),
         "email": data.email,
         "password": data.password,
         "permissions": [
@@ -81,15 +90,15 @@ export default function SignUp() {
           }
         ],
         "origin": "App"
-      };
+      });
       console.log(userDataCreateUser)
       await createUser(userDataCreateUser)
         .then(response => response.json())
         .then((result) => {
-          if(result.status.businessMessage.includes('Error')){
+          if(result.message.includes('Erro')){
             setDisableState(false)
             setStartRequest(false)
-            setMessageErrors(result.status.businessMessage);
+            setMessageErrors(result.message);
             console.log('messageErrors', messageErrors)
           } else {
             console.log('criado com sucesso', result);
@@ -100,6 +109,7 @@ export default function SignUp() {
           }
         })
     } catch (err) {
+      debugger
       console.log('err', err)
       if(err instanceof Yup.ValidationError) {
         setDisableState(false)
@@ -140,17 +150,19 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <CInput
-                disabled={disableState}
-                variant="outlined"
-                required
-                fullWidth
-                id="cpf"
-                onBlur={() => verifyCPFValid()}
-                label="CPF"
-                name="cpf"
-                autoComplete="cpf"
-              />
+            <NumberFormat
+              format="###.###.###-##"
+              customInput={CInput}
+              disabled={disableState}
+              variant="outlined"
+              required
+              fullWidth
+              id="cpf"
+              onBlur={() => verifyCPFValid()}
+              label="CPF"
+              name="cpf"
+              autoComplete="cpf"
+            />
             </Grid>
             <Grid item xs={12}>
               <CInput

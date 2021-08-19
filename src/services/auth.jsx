@@ -1,4 +1,5 @@
 export const isAuthenticated = () => window.localStorage.getItem('tokenUser');
+const authorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWNiOGQ0YTUyMDM1MjdiN2JlZmE4YTYxIiwibmFtZSI6IlJvYnNvbiBLYWlvIiwibG9naW4iOiIzMDYyODcwMTg0NSIsInJvbGVzIjpbImFkbWluIl19LCJpYXQiOjE2MjczMjkxMjksImV4cCI6MTYyODYyNTEyOX0.PudM4beN6bb176BobvXdRszTez1uWlM1wQDANqqX9WY"
 
 export const loggingUser = (user) => {
   debugger
@@ -47,13 +48,13 @@ export const aboutUser = () => {
   })
 }
 
-export const recoveryPassword = () => {
-  return fetch("https://api.coop-sp.coop.br/app//profile", {
-    method: 'get',
+export const recoveryPassword = (data) => {
+  return fetch("https://api.coop-sp.coop.br/app//auth/newpassword", {
+    method: 'post',
     headers: {
       "x-api-key": "ZnsEzOmvhD7wgymEzvQFuaQHDvsqitvg439tImum",
-      "Content-Type": "application/json",
-      "Authorization": window.localStorage.getItem('tokenUser')
-    }
+      "Content-Type": "application/json"
+    },
+    body: data
   })
 }

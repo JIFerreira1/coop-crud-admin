@@ -1,16 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useField } from '@unform/core';
 
-import { 
-  FormLabel,
-  FormControl, 
-  InputLabel,
-  Select,
-  RadioGroup, 
-  FormControlLabel, 
-  Radio
+import {
+  FormControl,
+  Select
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import MenuItem from '@material-ui/core/MenuItem';
 
 export default function CRadioButton({ name, ...rest }) {
   const inputRef = useRef(null);
@@ -23,27 +19,26 @@ export default function CRadioButton({ name, ...rest }) {
       name: fieldName,
       ref: inputRef,
       getValue: ref => {
-        return ref.current.children[0].value
+        debugger
+        return ref.current.children[1].value
       },
       setValue: (ref, value) => {
-        ref.current.children[0].value = value
+        debugger
+        ref.current.children[1].value = value
       },
     })
   }, [fieldName, registerField])
 
   return (
     <div>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+      <FormControl variant="outlined">
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          onChange={handleChange}
+          displayEmpty={true}
+          defaultValue={"sms"}
+          ref={inputRef}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem key={"sms"} value={"sms"}>SMS</MenuItem>
+          <MenuItem key={"email"} value={"email"}>E-mail</MenuItem>
         </Select>
       </FormControl>
 

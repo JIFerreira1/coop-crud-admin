@@ -1,18 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import * as Yup from 'yup';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import NumberFormat from 'react-number-format';
 import { 
-  Typography, 
-  FormLabel, 
-  RadioGroup, 
-  FormControlLabel, 
-  Radio, 
-  Button, 
-  TextField, 
+  Typography,
+  Button,
+  InputLabel,
   Grid, 
   Container,
-  Avatar,
-  CircularProgress
+  Avatar
 } from '@material-ui/core';
 
 import { useSnackbar } from 'notistack';
@@ -34,6 +30,7 @@ export default function RecoveryPassword() {
   const formRef = useRef(null);
   const classes = useStyles();
   let userDataCreateUser = {};
+  let userDataRecoveryPW = {};
 
   const [disableState, setDisableState] = React.useState(false);
   const [startRequest, setStartRequest] = React.useState(false);
@@ -53,7 +50,7 @@ export default function RecoveryPassword() {
     if(formRef.current.getFieldValue('cpf')) {
       formRef.current.setErrors({});
       const formatDataValidateCPFExistent = JSON.stringify({
-        "cpf": formRef.current.getFieldValue('cpf'),
+        "cpf": formRef.current.getFieldValue('cpf').split('.').join('').split('-').join(''),
         "origin": "App"
       });
   
@@ -77,27 +74,27 @@ export default function RecoveryPassword() {
         abortEarly: false,
       })
       debugger
-      userDataRecoveryPW = {
-        "cpf": data.cpf,
+      userDataRecoveryPW = JSON.stringify({
+        "cpf": data.cpf.split('.').join('').split('-').join(''),
         "mode": data.gender1,
-      };
+      });
       console.log(userDataRecoveryPW)
-      // await recoveryPassword(userDataRecoveryPW)
-      //   .then(response => response.json())
-      //   .then((result) => {
-      //     if(result.status.businessMessage.includes('Error')){
-      //       setDisableState(false)
-      //       setStartRequest(false)
-      //       setMessageErrors(result.status.businessMessage);
-      //       console.log('messageErrors', messageErrors)
-      //     } else {
-      //       console.log('criado com sucesso', result);
-      //       // window.localStorage.setItem('tokenUser', result.token);
-      //       // history.push('/dashboard');
-      //       setStartRequest(false)
-      //       formRef.current.setErrors({});
-      //     }
-      //   })
+      await recoveryPassword(userDataRecoveryPW)
+        .then(response => response.json())
+        .then((result) => {
+          if(result.message.includes('Erro')){
+            setDisableState(false)
+            setStartRequest(false)
+            setMessageErrors(result.message);
+            console.log('messageErrors', messageErrors)
+          } else {
+            console.log('recuperado com sucesso', result);
+            // window.localStorage.setItem('tokenUser', result.token);
+            // history.push('/dashboard');
+            setStartRequest(false)
+            formRef.current.setErrors({});
+          }
+        })
     } catch (err) {
       console.log('err', err)
       if(err instanceof Yup.ValidationError) {
@@ -109,8 +106,8 @@ export default function RecoveryPassword() {
             validationErrors[error.path] = error.message;
           });
           formRef.current.setErrors(validationErrors);
-          setMessageErrors(formRef.current.getErrors());
           console.log('erro', formRef.current.getErrors())
+          setMessageErrors(formRef.current.getErrors());
         }
       }
     }    
@@ -126,23 +123,26 @@ export default function RecoveryPassword() {
           Recuperar Senha
         </Typography>
         <Form className={classes.form} ref={formRef} onSubmit={handleSubmit} noValidate={true}>
-          {/* <Grid container spacing={2}>
-            <Grid item xs={12}> */}
-              <CInput
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="cpf"
-                  label="CPF"
-                  name="cpf"
-                  autoComplete="cpf"
-                  onBlur={() => verifyCPFValid()}
-              />
-            {/* </Grid>
-            <Grid item xs={12}> */}
-            <CRadioButton aria-label="gender" name="gender1" />
-            {/* </Grid>
-          </Grid> */}
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+            <NumberFormat 
+              format="###.###.###-##" 
+              customInput={CInput} 
+              variant="outlined"
+              required
+              fullWidth
+              id="cpf"
+              label="CPF"
+              name="cpf"
+              autoComplete="cpf"
+              onBlur={() => verifyCPFValid()}/>
+            </Grid>
+            <Grid item xs={12}>
+              <InputLabel id="demo-simple-select-outlined-label">Como deseja receber a nova senha?</InputLabel>
+              <br />
+              <CRadioButton name="gender1" />
+            </Grid>
+          </Grid>
           <Button
             type="submit"
             fullWidth

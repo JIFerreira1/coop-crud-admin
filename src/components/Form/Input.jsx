@@ -15,6 +15,7 @@ export default function CInput({ name, ...rest }) {
       name: fieldName,
       ref: inputRef,
       getValue: ref => {
+        debugger
         return ref.current.children[0].value
       },
       setValue: (ref, value) => {
@@ -32,7 +33,7 @@ export default function CInput({ name, ...rest }) {
 
       <FormControl variant="outlined" style={{width: '100%'}}>
         <InputLabel htmlFor="component-outlined">{label}</InputLabel>
-        <OutlinedInput {...rest} ref={inputRef} id="component-outlined" label="Name"/>
+        <OutlinedInput {...rest} ref={inputRef} id="component-outlined" label="Name" />
       </FormControl>
 
       {error && <Alert severity="error">{error}</Alert>}

@@ -13,7 +13,7 @@ import StoreContext from '../../contexts/Store';
 export default function CShowDetailsModal() {
   const classes = useStyles();
   
-  const [modalStyle] = useState(getModalStyle);
+  // const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [dataCurrent, setDataCurrent] = useState({});
 
@@ -29,21 +29,20 @@ export default function CShowDetailsModal() {
     return Math.round(Math.random() * 20) - 10;
   }
   
-  function getModalStyle() {
-    const top = 45 + rand();
-    const left = 45 + rand();
+  // function getModalStyle() {
+  //   const top = 45 + rand();
+  //   const left = 45 + rand();
   
-    return {
-      // top: `${top}%`,
-      // left: `${left}%`,
-      // transform: `translate(-${top}%, -${left}%)`
-    };
-  }
+  //   return {
+  //     top: `${top}%`,
+  //     left: `${left}%`,
+  //     // transform: `translate(-${top}%, -${left}%)`
+  //   };
+  // }
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
+    <div className={classes.paper}>
       <form className={classes.form} noValidate>
-        {console.log(modalInfos)}
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -53,7 +52,9 @@ export default function CShowDetailsModal() {
               label="Drogaria Rua"
               name="drogaria rua"
               value={modalInfos.drogariaRua}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -64,7 +65,9 @@ export default function CShowDetailsModal() {
               label="Sigla"
               name="sigla"
               value={modalInfos.sigla}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -75,7 +78,9 @@ export default function CShowDetailsModal() {
               label="Nome"
               name="nome"
               value={modalInfos.nome}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />        
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -86,7 +91,9 @@ export default function CShowDetailsModal() {
               label="Categoria"
               name="categoria"
               value={modalInfos.categoria}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -97,7 +104,9 @@ export default function CShowDetailsModal() {
               label="Logradouro"
               name="logradouro"
               value={modalInfos.logradouro}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -108,7 +117,9 @@ export default function CShowDetailsModal() {
               label="Número"
               name="numero"
               value={modalInfos.numero}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -119,7 +130,9 @@ export default function CShowDetailsModal() {
               label="Complemento"
               name="complemento"
               value={modalInfos.complemento}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -130,7 +143,9 @@ export default function CShowDetailsModal() {
               label="Bairro"
               name="bairro"
               value={modalInfos.bairro}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -141,7 +156,9 @@ export default function CShowDetailsModal() {
               label="Cidade"
               name="cidade"
               value={modalInfos.cidade}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -152,7 +169,9 @@ export default function CShowDetailsModal() {
               label="UF"
               name="uf"
               value={modalInfos.uf}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
               />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -163,7 +182,9 @@ export default function CShowDetailsModal() {
               label="CEP"
               name="cep"
               value={modalInfos.cep}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -174,7 +195,9 @@ export default function CShowDetailsModal() {
               label="Telefone"
               name="telefone"
               value={modalInfos.telefone}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -185,7 +208,9 @@ export default function CShowDetailsModal() {
               label="Funcionamento de Segunda a Sábado"
               name="funcionamentoSegSab"
               value={modalInfos.funcionamentoSegSab}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -196,7 +221,9 @@ export default function CShowDetailsModal() {
               label="Funcionamento de Domingo e Feriados"
               name="funcionamentoDomFer"
               value={modalInfos.funcionamentoDomFer}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -207,7 +234,9 @@ export default function CShowDetailsModal() {
               label="Latitude"
               name="latitude"
               value={modalInfos.latitude}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -218,7 +247,9 @@ export default function CShowDetailsModal() {
               label="Longitude"
               name="longitude"
               value={modalInfos.longitude}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -229,7 +260,9 @@ export default function CShowDetailsModal() {
               label="Blitz-Saúde"
               name="blitz-Saude"
               value={modalInfos.blitzSaude}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -240,7 +273,9 @@ export default function CShowDetailsModal() {
               label="Farmácia Popular"
               name="farmaciaPopular"
               value={modalInfos.farmaciaPopular}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -251,7 +286,9 @@ export default function CShowDetailsModal() {
               label="Seller Ecomm"
               name="sellerEcomm"
               value={modalInfos.sellerEcomm}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -262,7 +299,9 @@ export default function CShowDetailsModal() {
               label="ID Loja PDV"
               name="idLojaPdv"
               value={modalInfos.idLojaPdv}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
             /> 
           </Grid>
         </Grid>
@@ -281,7 +320,8 @@ export default function CShowDetailsModal() {
       onClose={handleClose}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      style={{overflowY: 'auto'}}
+      style={{overflowY: 'auto', margin: '15px 0'}}
+      
     >
       {body}
     </Modal>
